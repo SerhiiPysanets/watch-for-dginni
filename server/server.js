@@ -39,7 +39,7 @@ async function checkWebsite(webpage) {
 
 
   try {
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({ headless: 'new' })
     const page = await browser.newPage()
     await page.setUserAgent('Chrome/75.0.3770.100')
     await page.goto(url)
