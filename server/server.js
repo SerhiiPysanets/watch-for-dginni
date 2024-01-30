@@ -61,9 +61,8 @@ async function checkWebsite(webpage) {
       })
     })
 
-    const forMe = vacancy.filter((obj) => { return obj.text.includes("developer") })
-    // .filter((obj) => !obj.str.includes('intermediate') && !obj.str.includes("advanced"))
-    // obj.text.includes("react") || obj.text.includes("node") || obj.text.includes("javascript") || obj.text.includes("nodejs")
+    const forMe = vacancy.filter((obj) => { return obj.text.includes("react") || obj.text.includes("node") || obj.text.includes("javascript") || obj.text.includes("nodejs") })
+    .filter((obj) => !obj.str.includes('intermediate') && !obj.str.includes("advanced"))
 
     const lastTime = vacancy[vacancy.length - 1].time
     const formatLastTime = formatTime(lastTime)
@@ -114,7 +113,7 @@ async function checkWebsite(webpage) {
     // }
 
 
-    if (minutesDifference < 220) {
+    if (minutesDifference < 20) {
       await browser.close()
       await checkWebsite(numPage + 1)
     }
@@ -127,12 +126,7 @@ async function checkWebsite(webpage) {
   } catch(err){console.log(err)}
 }
 
-async function message() {
- return await bot.sendMessage(myChatId, 'Ok')
-}
-
-setInterval(message, 60500)
-setInterval(checkWebsite, 60000)
+setInterval(checkWebsite, 300000)
 middlewere.forEach((it) => server.use(it))
 
 server.get('/', (req, res) => {
