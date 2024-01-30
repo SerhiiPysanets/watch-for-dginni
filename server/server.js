@@ -125,8 +125,12 @@ async function checkWebsite(webpage) {
   } catch(err){console.log(err)}
 }
 
-setInterval(checkWebsite, 60000)
+async function message() {
+ return await bot.sendMessage(myChatId, 'Ok')
+}
 
+setInterval(message, 60500)
+setInterval(checkWebsite, 60000)
 middlewere.forEach((it) => server.use(it))
 
 server.get('/', (req, res) => {
