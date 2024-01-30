@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { resolve } from 'path'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 import TelegramApi from 'node-telegram-bot-api'
 import config from './config.cjs'
 import { Html } from '../client/html.js'
@@ -39,7 +39,10 @@ async function checkWebsite(webpage) {
 
 
   try {
-    const browser = await puppeteer.launch({ headless: 'new' })
+    const browser = await puppeteer.launch({
+      headless: 'new',
+      executablePath: '/vercel/path0/node_modules/puppeteer-core/.local-chromium/linux-756035/chrome-linux/chrome'
+    })
     const page = await browser.newPage()
     await page.setUserAgent('Chrome/75.0.3770.100')
     await page.goto(url)
