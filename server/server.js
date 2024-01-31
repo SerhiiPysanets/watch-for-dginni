@@ -45,10 +45,10 @@ async function checkWebsite(webpage) {
     const page = await browser.newPage()
     await page.setUserAgent('Chrome/75.0.3770.100')
     await page.goto(url)
-    await page.screenshot({
-      path: screenshot,
-      fullPage: true
-    })
+    // await page.screenshot({
+    //   path: screenshot,
+    //   fullPage: true
+    // })
 
     const vacancy = await page.$$eval('.h3.job-list-item__link', (elem) => {
       return elem.map((e) => {
@@ -84,7 +84,7 @@ async function checkWebsite(webpage) {
         for (const rec of forMe) {
           if (!list.includes(rec.href)) {
             try {
-              await takeScreenshot(rec.href);
+              // await takeScreenshot(rec.href);
               await bot.sendMessage(myChatId, `${rec.href}`)
               console.log(`Screenshot taken for ${rec.href}`);
               list = [...list, rec.href];
@@ -118,10 +118,10 @@ async function checkWebsite(webpage) {
       await checkWebsite(numPage + 1)
     }
 
-    console.log(`${numPage}:`, vacancy, minutesDifference, currentTime, list)
+    console.log(`${numPage}:`,minutesDifference, currentTime, list)
 
     await browser.close()
-    console.log('See screenshot: ' + screenshot)
+    // console.log('See screenshot: ' + screenshot)
 
   } catch(err){console.log(err)}
 }
