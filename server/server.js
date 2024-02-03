@@ -7,6 +7,9 @@ import TelegramApi from 'node-telegram-bot-api'
 import config from './config.cjs'
 import { Html } from '../client/html.js'
 
+const CHECK_TIME_MIN = 1
+const DIF_MIN_LAST_MSG = 20
+
 const server = express()
 const PORT = process.env.PORT || 8080
 const __dirname = process.cwd()
@@ -61,8 +64,9 @@ async function checkWebsite(webpage) {
       })
     })
 
-    const forMe = vacancy.filter((obj) => { return obj.text.includes("react") || obj.text.includes("node") || obj.text.includes("javascript") || obj.text.includes("nodejs") })
+    const forMe = vacancy.filter((obj) => { return obj.text.includes("developer")})
     .filter((obj) => !obj.str.includes('intermediate') && !obj.str.includes("advanced"))
+    // || obj.text.includes("node") || obj.text.includes("javascript") || obj.text.includes("nodejs")
 
     const lastTime = vacancy[vacancy.length - 1].time
     const formatLastTime = formatTime(lastTime)
@@ -113,7 +117,7 @@ async function checkWebsite(webpage) {
     // }
 
 
-    if (minutesDifference < 20) {
+    if (minutesDifference < DIF_MIN_LAST_MSG) {
       await browser.close()
       await checkWebsite(numPage + 1)
     }
@@ -126,7 +130,7 @@ async function checkWebsite(webpage) {
   } catch(err){console.log(err)}
 }
 
-setInterval(checkWebsite, 300000)
+setInterval(checkWebsite, CHECK_TIME_MIN * 60 * 1000)
 middlewere.forEach((it) => server.use(it))
 
 server.get('/', (req, res) => {
